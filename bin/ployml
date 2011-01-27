@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require "ployml"
+Ployml::Deployer.new(STDOUT).deploy
