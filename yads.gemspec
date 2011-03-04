@@ -1,18 +1,16 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "ployml/version"
+require "yads/version"
 
 Gem::Specification.new do |s|
-  s.name        = "ployml"
-  s.version     = Ployml::VERSION
+  s.name        = "yads"
+  s.version     = Yads::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Rafael Souza"]
   s.email       = ["me@rafaelss.com"]
-  s.homepage    = "http://github.com/rafaelss/ployml"
+  s.homepage    = "http://github.com/rafaelss/yads"
   s.summary     = %q{Deploy your code using a YAML file}
   s.description = %q{Simple deployment tool that uses a single YAML file to put your code live}
-
-  # s.rubyforge_project = "ployml"
 
   s.add_runtime_dependency "net-ssh", "~> 2.1.0"
   s.add_development_dependency "minitest", "~> 2.0.2"

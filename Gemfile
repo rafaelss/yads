@@ -1,4 +1,4 @@
 source "http://rubygems.org"
 
-# Specify your gem's dependencies in ployml.gemspec
+# Specify your gem's dependencies in yads.gemspec
 gemspec

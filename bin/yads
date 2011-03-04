@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require "yads"
+Yads::Deployer.new(STDOUT).deploy

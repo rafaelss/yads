@@ -1,7 +1,7 @@
 require "net/ssh"
 require "yaml"
 
-module Ployml
+module Yads
 
   class ConfigNotFound < Errno::ENOENT; end
 
@@ -14,7 +14,7 @@ module Ployml
       begin
         config = YAML.load(File.open("config/deploy.yml"))
       rescue Errno::ENOENT
-        raise Ployml::ConfigNotFound, "config/deploy.yml not found"
+        raise Yads::ConfigNotFound, "config/deploy.yml not found"
       end
 
       Net::SSH.start(config["host"], config["user"], :forward_agent => config["forward_agent"]) do |ssh|

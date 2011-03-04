@@ -1,7 +1,7 @@
 host: rafaelss.com
 user: deploy
 forward_agent: true
-path: /Users/rafael/projects/ployml/test/fixtures
+path: /Users/rafael/projects/yads/test/fixtures
 commands:
-  chdir: cd /tmp/ployml
+  chdir: cd /tmp/yads
   touch: touch test
