@@ -1,4 +1,5 @@
 require "net/ssh"
+require "yaml"
 
 module Ployml
 
@@ -32,13 +33,18 @@ module Ployml
     end
 
     def check_path(ssh, path, clone)
+      @logger.puts "> cd #{path}/.git"
       ssh.exec("cd #{path}/.git") do |ch, stream, data|
         if stream == :stderr
-          @logger.puts "> #{clone}"
-          ssh.exec(clone) do |ch1, stream1, data1|
-            abort data1 if stream1 == :stderr
+          @logger.puts "> cd #{path}"
+          ssh.exec("cd #{path}") do |ch1, stream1, data1|
+            @logger.puts "> #{clone}"
+            ssh.exec(clone) do |ch1, stream1, data1|
+              abort data1 if stream1 == :stderr
 
-            ssh.exec("cd #{path}")
+              @logger.puts "> cd #{path}"
+              ssh.exec("cd #{path}")
+            end
           end
         end
       end
