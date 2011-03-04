@@ -1,0 +1,12 @@
+host: example.org
+user: username
+forward_agent: true/false
+
+path: /path/on/remote/server
+commands:
+  clone: git clone --depth 1 git@repohost.com:myproject.git . # mandatory, other commands below are optional
+  reset: git reset --hard
+  pull: git pull origin master
+  bundle: bundle install --deployment --binstubs --without development test
+  migrate: ENV=production bin/rake db:migrate --silent
+  restart: touch tmp/restart.txt
