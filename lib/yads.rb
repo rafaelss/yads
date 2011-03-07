@@ -37,7 +37,7 @@ module Yads
       ssh.exec("cd #{path}/.git") do |ch, stream, data|
         if stream == :stderr
           @logger.puts "> cd #{path}"
-          ssh.exec("cd #{path}") do |ch1, stream1, data1|
+          ssh.exec("mkdir -p #{path}; cd #{path}") do |ch1, stream1, data1|
             @logger.puts "> #{clone}"
             ssh.exec(clone) do |ch1, stream1, data1|
               abort data1 if stream1 == :stderr
