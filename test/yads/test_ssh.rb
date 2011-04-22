@@ -20,6 +20,7 @@ class TestSSH < MiniTest::Unit::TestCase
   def test_execute_with_block
     session = mock
     session.expects(:exec).with("echo $PATH").yields(nil, nil, "/usr/bin:/usr/local/bin")
+    session.expects(:loop)
     connection_mock(session)
 
     s = Yads::SSH.new(:host => "example.org", :user => "deploy", :forward_agent => true)

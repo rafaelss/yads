@@ -20,7 +20,7 @@ module Yads
 
       @logger.puts("> #{commands}")
       connection.execute(commands) do |output|
-        @logger.puts(output)
+        @logger.print(output)
       end
     end
 

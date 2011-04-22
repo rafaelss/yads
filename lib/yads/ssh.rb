@@ -13,6 +13,7 @@ module Yads
         @ssh.exec(cmd) do |ch, stream, data|
           yield data
         end
+        @ssh.loop
       else
         @ssh.exec!(cmd)
       end
