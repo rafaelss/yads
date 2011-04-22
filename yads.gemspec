@@ -13,6 +13,7 @@ Gem::Specification.new do |s|
   s.description = %q{Simple deployment tool that uses a single YAML file to put your code live}
 
   s.add_runtime_dependency "net-ssh", "~> 2.1.0"
+  s.add_runtime_dependency "slop", "~> 1.5.2"
   s.add_development_dependency "minitest", "~> 2.0.2"
   s.add_development_dependency "mocha", "~> 0.9.10"
 

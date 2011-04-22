@@ -1,4 +1,16 @@
 #!/usr/bin/env ruby
+require "slop"
 
-require "yads"
-Yads::Deployer.new(STDOUT).deploy
+opts = Slop.new(:strict => true)
+opts.parse do |action|
+  require "yads"
+  deployer = Yads::Deployer.new(STDOUT)
+
+  action = action.to_sym
+  if !action.empty? && deployer.respond_to?(action)
+    deployer.send(action)
+  else
+    puts "Unknow command \"#{action}\""
+    puts "Usage: yads [setup|deploy]"
+  end
+end

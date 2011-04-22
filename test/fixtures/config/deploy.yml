@@ -1,7 +1,8 @@
 host: rafaelss.com
 user: deploy
 forward_agent: true
-path: /Users/rafael/projects/yads/test/fixtures
+path: /tmp/yads
+repository: git@repohost.com:myrepo.git
 commands:
-  chdir: cd /tmp/yads
+  migrate: rake db:migrate
   touch: touch test
