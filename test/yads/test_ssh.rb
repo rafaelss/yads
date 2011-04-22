@@ -1,9 +1,4 @@
-require "bundler"
-Bundler.require
-
-require "minitest/autorun"
-require "mocha"
-require "yads/ssh"
+require "test_helper"
 
 class TestSSH < MiniTest::Unit::TestCase
 

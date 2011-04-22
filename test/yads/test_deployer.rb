@@ -1,8 +1,4 @@
-require "bundler"
-Bundler.require
-
-require "minitest/autorun"
-require "mocha"
+require "test_helper"
 
 class TestYads < MiniTest::Unit::TestCase
 
@@ -53,6 +49,6 @@ class TestYads < MiniTest::Unit::TestCase
   private
 
     def inside_project_root(&block)
-      Dir.chdir(File.expand_path("../fixtures", __FILE__), &block)
+      Dir.chdir(File.expand_path("../../fixtures", __FILE__), &block)
     end
 end
