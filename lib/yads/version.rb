@@ -1,3 +1,3 @@
 module Yads
-  VERSION = "0.0.3.pre2"
+  VERSION = "0.1.0"
 end
