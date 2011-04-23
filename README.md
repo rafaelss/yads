@@ -18,14 +18,14 @@ and
 
 - Configure deploy.yml
 
-- Run `yads` on root directory
+- Run `bundle exec yads setup` if it's the first deploy you do
 
-Done. Your application is deployed.
+- Run `bundle exec yads deploy` to deploy the code and put your application live
 
 ## TODO
 
 - Let run commands by name: `yads migrate && yads restart` or `yads migrate restart` like rake tasks
-- Improve test suite
+- Separate commands and tasks. Tasks would be commands you could run alone, any time you want
 
 ## Maintainer
 
