@@ -14,7 +14,7 @@ and
 
 ## Usage
 
-- Create the [deploy.yml](http://github.com/rafaelss/yads/blob/examples/deploy.yml) file inside config directory.
+- Create the [deploy.yml](https://github.com/rafaelss/yads/blob/master/examples/deploy.yml) file inside config directory.
 
 - Configure deploy.yml
 
