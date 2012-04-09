@@ -8,6 +8,12 @@ class TestSSH < MiniTest::Unit::TestCase
     Yads::SSH.new(:host => "example.org", :user => "deploy", :forward_agent => true)
   end
 
+  def test_connect_using_non_standard_port
+    connection_mock(nil, :port => 2222)
+
+    Yads::SSH.new(:host => "example.org", :port => 2222, :user => "deploy", :forward_agent => true)
+  end
+
   def test_execute
     session = mock
     session.expects(:exec!).with("mkdir -p /tmp/yads")
@@ -40,7 +46,7 @@ class TestSSH < MiniTest::Unit::TestCase
 
   private
 
-    def connection_mock(session = nil)
-      Net::SSH.expects(:start).with("example.org", "deploy", :forward_agent => true).returns(session)
-    end
+  def connection_mock(session = nil, options = {})
+    Net::SSH.expects(:start).with("example.org", "deploy", { :forward_agent => true }.merge(options)).returns(session)
+  end
 end

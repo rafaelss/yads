@@ -5,7 +5,10 @@ module Yads
   class SSH
 
     def initialize(config)
-      @ssh = Net::SSH.start(config[:host], config[:user], :forward_agent => config[:forward_agent])
+      options = { :forward_agent => config[:forward_agent] }
+      options[:port] = config[:port] if config[:port]
+
+      @ssh = Net::SSH.start(config[:host], config[:user], options)
     end
 
     def execute(cmd)
