@@ -12,13 +12,15 @@ Gem::Specification.new do |s|
   s.summary     = %q{Deploy your code using a YAML file}
   s.description = %q{Simple deployment tool that uses a single YAML file to put your code live}
 
-  s.add_runtime_dependency "net-ssh", "~> 2.1.0"
-  s.add_runtime_dependency "slop", "~> 1.5.2"
-  s.add_development_dependency "minitest", "~> 2.0.2"
-  s.add_development_dependency "mocha", "~> 0.9.10"
-
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
+
+  s.add_runtime_dependency "net-ssh", "~> 2.1.0"
+  s.add_runtime_dependency "slop", "~> 1.5.2"
+
+  s.add_development_dependency "rake", ">= 0.8.7"
+  s.add_development_dependency "minitest", "~> 2.0.2"
+  s.add_development_dependency "mocha", "~> 0.9.10"
 end
