@@ -26,16 +26,25 @@ module Yads
 
     private
 
-      def config
-        @config ||= begin
-          YAML.load(File.open("config/deploy.yml"))
-        rescue Errno::ENOENT
-          raise Yads::ConfigNotFound, "config/deploy.yml not found"
-        end
+    def config
+      @config ||= begin
+        YAML.load(File.open("config/deploy.yml"))
+      rescue Errno::ENOENT
+        raise Yads::ConfigNotFound, "config/deploy.yml not found"
       end
+    end
 
-      def connection
-        @connection ||= SSH.new(:host => config["host"], :user => config["user"], :forward_agent => config["forward_agent"])
+    def connection
+      @connection ||= begin
+        options = {
+          :host => config["host"],
+          :user => config["user"],
+          :forward_agent => config["forward_agent"]
+        }
+        options[:port] = config["port"] if config["port"]
+
+        SSH.new(options)
       end
+    end
   end
 end

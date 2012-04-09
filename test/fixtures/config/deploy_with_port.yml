@@ -1,0 +1,9 @@
+host: rafaelss.com
+port: 2222
+user: deploy
+forward_agent: true
+path: /tmp/yads
+repository: git@repohost.com:myrepo.git
+commands:
+  migrate: rake db:migrate
+  touch: touch test
