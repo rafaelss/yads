@@ -7,7 +7,7 @@ Yet Another Deploy Solution is a simple gem to deploy applications using a singl
     group :deploy do
       gem "yads"
     end
-    
+
 and
 
     bundle install
@@ -22,10 +22,19 @@ and
 
 - Run `bundle exec yads deploy` to deploy the code and put your application live
 
+You can also run single commands by the name defined on your config, like that:
+
+    bundle exec yads migrate
+
+Or
+
+    bundle exec yads restart
+
 ## TODO
 
-- Let run commands by name: `yads migrate && yads restart` or `yads migrate restart` like rake tasks
+- <del>Let run commands by name: `yads migrate && yads restart` or `yads migrate restart` like rake tasks</del>
 - Separate commands and tasks. Tasks would be commands you could run alone, any time you want
+- Let run two or more commands at once
 
 ## Maintainer
 
