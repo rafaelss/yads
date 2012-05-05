@@ -70,6 +70,31 @@ class TestYads < MiniTest::Unit::TestCase
     end
   end
 
+  def test_command_names
+    inside_project_root do
+      deployer = Yads::Deployer.new(@log_file)
+      assert_equal ["migrate", "touch"], deployer.command_names
+    end
+  end
+
+  def test_respond_to_command
+    inside_project_root do
+      deployer = Yads::Deployer.new(@log_file)
+      assert deployer.respond_to?(:migrate), "Deployer does not respond to :migrate"
+    end
+  end
+
+  def test_execute_the_command
+    inside_project_root do
+      ssh = mock
+      ssh.expects(:execute).with("cd /tmp/yads && rake db:migrate")
+      Yads::SSH.expects(:new).with(:host => "rafaelss.com", :user => "deploy", :forward_agent => true).returns(ssh)
+
+      deployer = Yads::Deployer.new(@log_file)
+      deployer.migrate
+    end
+  end
+
   private
 
   def inside_project_root(&block)

@@ -11,6 +11,7 @@ opts.parse do |action|
     deployer.send(action)
   else
     puts "Unknow command \"#{action}\""
-    puts "Usage: yads [setup|deploy]"
+    commands = ["setup", "deploy"].concat(deployer.command_names).join("|")
+    puts "Usage: yads [#{commands}]"
   end
 end

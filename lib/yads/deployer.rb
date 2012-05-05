@@ -24,6 +24,31 @@ module Yads
       end
     end
 
+    def method_missing(name, *args)
+      if command_names.include?(name.to_s)
+        commands = ["cd #{config["path"]}", config["commands"][name.to_s]]
+        commands = commands.join(" && ")
+        @logger.puts("> #{commands}")
+        connection.execute(commands) do |output|
+          @logger.print(output)
+        end
+      else
+        super
+      end
+    end
+
+    def respond_to?(name)
+      if command_names.include?(name.to_s)
+        true
+      else
+        super
+      end
+    end
+
+    def command_names
+      config["commands"].keys
+    end
+
     private
 
     def config
