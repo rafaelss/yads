@@ -1,9 +1,8 @@
 require "test_helper"
 
 class TestYads < MiniTest::Unit::TestCase
-
   def setup
-    @log_file = File.open("/dev/null", "w")
+    @log_file = STDOUT #File.open("/dev/null", "w")
   end
 
   def test_try_loading_not_found_config_file_on_setup
