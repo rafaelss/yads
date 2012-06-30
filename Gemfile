@@ -1,4 +1,4 @@
 source "http://rubygems.org"
-
-# Specify your gem's dependencies in yads.gemspec
 gemspec
+
+gem "rspec-extra-formatters", :github => "rafaelss/rspec_formatters"
