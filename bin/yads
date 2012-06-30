@@ -1,17 +1,20 @@
 #!/usr/bin/env ruby
-require "slop"
+require 'optparse'
 
-opts = Slop.new(:strict => true)
-opts.parse do |action|
-  require "yads"
-  deployer = Yads::Deployer.new(STDOUT)
+options = {}
+OptionParser.new do |opts|
+  opts.on("-e", "--environment LIBRARY", "Require the LIBRARY before executing your script") do |env|
+    options[:environment] = env
+  end
+end.parse!
 
-  action = action.to_sym
-  if !action.empty? && deployer.respond_to?(action)
-    deployer.send(action)
-  else
-    puts "Unknow command \"#{action}\""
-    commands = ["setup", "deploy"].concat(deployer.command_names).join("|")
-    puts "Usage: yads [#{commands}]"
+require "yads"
+deployer = Yads::Deployer.new(options[:environment], STDOUT)
+if ARGV.empty?
+  commands = ["setup", "deploy"].concat(deployer.command_names).join("|")
+  puts "Usage: yads [#{commands}]"
+else
+  ARGV.each do |cmd|
+    deployer.send(cmd)
   end
 end

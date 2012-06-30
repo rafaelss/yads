@@ -1,52 +1,52 @@
-require "test_helper"
+require "spec_helper"
 
-class TestSSH < MiniTest::Unit::TestCase
+describe Yads::SSH do
+  subject { described_class.new(:host => "example.org", :user => "deploy", :forward_agent => true) }
 
-  def test_connect
+  it "connects to the server" do
     connection_mock
-
-    Yads::SSH.new(:host => "example.org", :user => "deploy", :forward_agent => true)
+    subject
   end
 
-  def test_connect_using_non_standard_port
-    connection_mock(nil, :port => 2222)
+  context "using non-standard port" do
+    subject { described_class.new(:host => "example.org", :user => "deploy", :forward_agent => true, :port => 2222) }
 
-    Yads::SSH.new(:host => "example.org", :port => 2222, :user => "deploy", :forward_agent => true)
-  end
-
-  def test_execute
-    session = mock
-    session.expects(:exec!).with("mkdir -p /tmp/yads")
-    connection_mock(session)
-
-    s = Yads::SSH.new(:host => "example.org", :user => "deploy", :forward_agent => true)
-    s.execute("mkdir -p /tmp/yads")
-  end
-
-  def test_execute_with_block
-    session = mock
-    session.expects(:exec).with("echo $PATH").yields(nil, nil, "/usr/bin:/usr/local/bin")
-    session.expects(:loop)
-    connection_mock(session)
-
-    s = Yads::SSH.new(:host => "example.org", :user => "deploy", :forward_agent => true)
-    s.execute("echo $PATH") do |output|
-      assert_equal "/usr/bin:/usr/local/bin", output
+    it "connects to the server" do
+      connection_mock(nil, :port => 2222)
+      subject
     end
   end
 
-  def test_close
+  it "executes commands against the server" do
     session = mock
-    session.expects(:close)
+    session.should_receive(:exec!).with("mkdir -p /tmp/yads")
     connection_mock(session)
 
-    s = Yads::SSH.new(:host => "example.org", :user => "deploy", :forward_agent => true)
-    s.close
+    subject.execute("mkdir -p /tmp/yads")
+  end
+
+  it "executes commands against the server and yields the output" do
+    session = mock
+    session.should_receive(:exec).with("echo $PATH").and_yield(nil, nil, "/usr/bin:/usr/local/bin")
+    session.should_receive(:loop)
+    connection_mock(session)
+
+    subject.execute("echo $PATH") do |output|
+      output.should == "/usr/bin:/usr/local/bin"
+    end
+  end
+
+  it "closes the connection with the server" do
+    session = mock
+    session.should_receive(:close)
+    connection_mock(session)
+
+    subject.close
   end
 
   private
 
   def connection_mock(session = nil, options = {})
-    Net::SSH.expects(:start).with("example.org", "deploy", { :forward_agent => true }.merge(options)).returns(session)
+    Net::SSH.should_receive(:start).with("example.org", "deploy", { :forward_agent => true }.merge(options)).and_return(session)
   end
 end

@@ -2,8 +2,10 @@ require "yaml"
 
 module Yads
   class Deployer
+    CONFIG_FILE = "config/deploy.yml"
 
-    def initialize(logger = STDOUT)
+    def initialize(environment, logger = STDOUT)
+      @environment = environment
       @logger = logger
     end
 
@@ -53,9 +55,14 @@ module Yads
 
     def config
       @config ||= begin
-        YAML.load(File.open("config/deploy.yml"))
+        cfg = YAML.load_file(CONFIG_FILE)
+        if @environment
+          cfg = cfg[@environment]
+          raise Yads::UnknowEnvironment, "Environment #{@environment} is not configured" unless cfg.is_a?(Hash)
+        end
+        cfg
       rescue Errno::ENOENT
-        raise Yads::ConfigNotFound, "config/deploy.yml not found"
+        raise Yads::ConfigNotFound, "#{CONFIG_FILE} not found"
       end
     end
 
