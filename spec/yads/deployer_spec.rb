@@ -3,13 +3,13 @@ require "spec_helper"
 shared_examples_for Yads::Deployer do
   it "returns available commands" do
     inside_project_root do
-      subject.command_names.should == ["migrate", "touch"]
+      expect(subject.command_names).to eq(["migrate", "touch"])
     end
   end
 
   it "returns if it has a command configured" do
     inside_project_root do
-      subject.should respond_to(:migrate)
+      expect(subject).to respond_to(:migrate)
     end
   end
 
@@ -29,7 +29,7 @@ shared_examples_for Yads::Deployer do
         Dir.chdir("/tmp") do
           subject.setup
         end
-      end.should raise_error(Yads::ConfigNotFound)
+      end.to raise_error(Yads::ConfigNotFound)
     end
 
     it "executes commands against the server" do
@@ -49,7 +49,7 @@ shared_examples_for Yads::Deployer do
         Dir.chdir("/tmp") do
           subject.deploy
         end
-      end.should raise_error(Yads::ConfigNotFound)
+      end.to raise_error(Yads::ConfigNotFound)
     end
 
     it "executes commands against the server" do
@@ -121,7 +121,7 @@ describe Yads::Deployer do
     it "raises an error if environment is not configured in config file" do
       expect do
         inside_project_root { described_class.new("production").deploy }
-      end.should raise_error(Yads::UnknowEnvironment)
+      end.to raise_error(Yads::UnknowEnvironment)
     end
 
     it_behaves_like Yads::Deployer
